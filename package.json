@@ -1,0 +1,20 @@
+{
+  "name": "@cameronhunter/json-rpc",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write .",
+    "test": "node --loader ts-node/esm --test --test-reporter spec test/*.test.ts"
+  },
+  "keywords": [],
+  "author": "Cameron Hunter <hello@cameronhunter.co.uk>",
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/node-lts": "^18.12.5",
+    "@types/node": "^18",
+    "prettier": "^3.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
+  }
+}
