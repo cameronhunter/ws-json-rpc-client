@@ -1,6 +1,6 @@
 {
   "name": "@cameronhunter/ws-json-rpc-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A JSON-RPC 2.0 client that uses a WebSocket for transport",
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
