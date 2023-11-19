@@ -6,7 +6,7 @@ on:
 
 jobs:
     test:
-        name: 'Run test suite'
+        name: Test Suite
         runs-on: ubuntu-latest
 
         strategy:
