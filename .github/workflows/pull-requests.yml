@@ -26,6 +26,15 @@ jobs:
             - name: Run test suite
               run: pnpm run test
 
+    debug:
+        name: Debug
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                  echo "GitHub Actor: $GITHUB_ACTOR"
+                  echo "Event Name: $GITHUB_EVENT_NAME"
+                  echo "Condition Met: ${{ github.actor == 'dependabot[bot]' }}"
+
     # Automatically create a changeset for dependabot
     # See: https://github.com/feelepxyz/dependabot-changesets
     changesets:
