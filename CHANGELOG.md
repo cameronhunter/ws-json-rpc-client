@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.2
+
+### Patch Changes
+
+-   1592197: Updating package.json fields
+
 ## 1.1.1
 
 ### Patch Changes
