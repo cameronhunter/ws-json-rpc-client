@@ -17,11 +17,16 @@ jobs:
                 node-version: [16.x, 18.x, 20.x]
 
         steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
             - name: Get latest published version
               id: get-version
-              run: echo "v$(npm show @cameronhunter/ws-json-rpc-client@latest version)"
+              run: echo "v$(jq -r .version package.json)"
 
-            - uses: actions/checkout@v3
+            - name: Checking out tag ${{ steps.get-version.outputs.version }}
+              uses: actions/checkout@v3
               with:
                   ref: ${{ steps.get-version.outputs.version }}
 
