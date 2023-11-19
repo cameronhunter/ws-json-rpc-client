@@ -1,14 +1,13 @@
 import { Rpc } from '../src/Rpc';
 import { WebSocketConnection } from '../src/index';
 import { JsonRpcServer } from './__helpers__/JsonRpcServer';
-import { setImmediate } from 'node:timers/promises';
 
 interface MyApp {
     Methods: {
         hello: { params: [name: string]; result: string };
     };
-    Notifications: {
-        shoutIntoTheVoid: { params: [text: string] };
+    Events: {
+        saidHelloTo: { params: [text: string] };
     };
 }
 
@@ -44,7 +43,7 @@ describe('call', () => {
     test('resolves a sent command', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        server.onMethod((method, params, properties, rpc) => {
+        server.onCall((method, params, properties, rpc) => {
             if (method === 'hello') {
                 rpc.result(method, `Hello ${params[0]}!`);
             }
@@ -60,7 +59,7 @@ describe('call', () => {
     test('rejects on errors sent from the server', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        server.onMethod((method, params, properties, rpc) => {
+        server.onCall((method, params, properties, rpc) => {
             rpc.error(Rpc.ErrorCode.ServerErrorRequestedMethodNotFound);
         });
 
@@ -80,7 +79,7 @@ describe('call', () => {
     test('rejects on timeout', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        server.onMethod(() => {
+        server.onCall(() => {
             // Do nothing to cause a timeout.
         });
 
@@ -97,7 +96,7 @@ describe('call', () => {
 
         const notificationReceived = new Promise((resolve) => {
             server.onNotification((notification, params, additionalRequestProperties) => {
-                if (notification === 'shoutIntoTheVoid') {
+                if (notification === 'hello') {
                     resolve(additionalRequestProperties);
                 }
             });
@@ -105,7 +104,7 @@ describe('call', () => {
 
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
-        await client.notify('shoutIntoTheVoid', ['Ahhhhh!'], { sessionId: 1 });
+        await client.notify('hello', ['world'], { sessionId: 1 });
 
         await expect(notificationReceived).resolves.toEqual({ sessionId: 1 });
     });
@@ -116,7 +115,7 @@ describe('notify', () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
         const methodReceived = new Promise((resolve) => {
-            server.onMethod((method, params, additionalRequestProperties, rpc) => {
+            server.onCall((method, params, additionalRequestProperties, rpc) => {
                 if (method === 'hello') {
                     rpc.result(method, `Hello ${params[0]}!`);
                     resolve(additionalRequestProperties);
@@ -139,7 +138,7 @@ describe('notify', () => {
 
         const notificationReceived = new Promise((resolve) => {
             server.onNotification((notification, params, additionalRequestProperties) => {
-                if (notification === 'shoutIntoTheVoid') {
+                if (notification === 'hello') {
                     resolve(additionalRequestProperties);
                 }
             });
@@ -147,7 +146,7 @@ describe('notify', () => {
 
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
-        await client.notify('shoutIntoTheVoid', ['Ahhhhh!'], { sessionId: 1 });
+        await client.notify('hello', ['world'], { sessionId: 1 });
 
         await expect(notificationReceived).resolves.toEqual({ sessionId: 1 });
     });
@@ -160,12 +159,12 @@ describe('on', () => {
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
         const notificationReceived = new Promise((resolve) => {
-            client.on('shoutIntoTheVoid', resolve);
+            client.on('saidHelloTo', resolve);
         });
 
-        await server.notify('shoutIntoTheVoid', ['Ahhhhh!']);
+        await server.notify('saidHelloTo', ['world']);
 
-        await expect(notificationReceived).resolves.toBe('Ahhhhh!');
+        await expect(notificationReceived).resolves.toBe('world');
     });
 });
 
@@ -173,7 +172,9 @@ describe('off', () => {
     test('removes listeners for notifications', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        await using client = await new WebSocketConnection<MyApp>(server.address()).open();
+        await using client = (await new WebSocketConnection<MyApp>(
+            server.address(),
+        ).open()) as WebSocketConnection<MyApp>;
 
         const listener = jest.fn();
 

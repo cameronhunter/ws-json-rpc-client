@@ -6,18 +6,12 @@ import { Rpc } from '../../src/Rpc';
 
 type MethodRpc<TApp extends App> = {
     error(code: number, message?: string, data?: unknown): void;
-    notify<TNotification extends keyof TApp['Notifications']>(
-        name: TNotification,
-        params: TApp['Notifications'][TNotification]['params'],
-    ): void;
+    notify<TEvent extends keyof TApp['Events']>(name: TEvent, params: TApp['Events'][TEvent]['params']): void;
     result<TMethod extends keyof TApp['Methods']>(method: TMethod, result: TApp['Methods'][TMethod]['result']): void;
 };
 
 type NotificationRpc<TApp extends App> = {
-    notify<TNotification extends keyof TApp['Notifications']>(
-        name: TNotification,
-        params: TApp['Notifications'][TNotification]['params'],
-    ): void;
+    notify<TEvent extends keyof TApp['Events']>(name: TEvent, params: TApp['Events'][TEvent]['params']): void;
 };
 
 export class JsonRpcServer<TApp extends App> extends EventEmitter implements AsyncDisposable {
@@ -49,8 +43,8 @@ export class JsonRpcServer<TApp extends App> extends EventEmitter implements Asy
                         result(method, result) {
                             ws.send(JSON.stringify({ ...rest, id, method, result }));
                         },
-                        notify(notification, ...params) {
-                            ws.send(JSON.stringify({ ...rest, method: notification, params }));
+                        notify(eventName, ...params) {
+                            ws.send(JSON.stringify({ ...rest, method: eventName, params }));
                         },
                         error(code, message, data) {
                             ws.send(
@@ -85,7 +79,7 @@ export class JsonRpcServer<TApp extends App> extends EventEmitter implements Asy
         return this.#server.wss;
     }
 
-    onMethod<TMethod extends keyof TApp['Methods']>(
+    onCall<TMethod extends keyof TApp['Methods']>(
         cb: (
             method: TMethod,
             params: TApp['Methods'][TMethod]['params'],
@@ -98,10 +92,10 @@ export class JsonRpcServer<TApp extends App> extends EventEmitter implements Asy
         });
     }
 
-    onNotification<TNotification extends keyof TApp['Notifications']>(
+    onNotification<TMethod extends keyof TApp['Methods']>(
         cb: (
-            notification: TNotification,
-            params: TApp['Notifications'][TNotification]['params'],
+            method: TMethod,
+            params: TApp['Methods'][TMethod]['params'],
             additionalRequestProperties: { [name: string]: any },
             rpc: NotificationRpc<TApp>,
         ) => void,
@@ -111,12 +105,12 @@ export class JsonRpcServer<TApp extends App> extends EventEmitter implements Asy
         });
     }
 
-    async notify<TNotification extends keyof TApp['Notifications']>(
-        notification: TNotification,
-        params: TApp['Notifications'][TNotification]['params'],
+    async notify<TEvent extends keyof TApp['Events']>(
+        eventName: TEvent,
+        params: TApp['Events'][TEvent]['params'],
         additionalRequestProperties?: { [name: string]: any },
     ): Promise<void> {
-        await this.#server.send(JSON.stringify({ ...additionalRequestProperties, method: notification, params }));
+        await this.#server.send(JSON.stringify({ ...additionalRequestProperties, method: eventName, params }));
     }
 
     address(): URL {

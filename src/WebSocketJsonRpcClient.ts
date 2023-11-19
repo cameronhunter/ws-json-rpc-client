@@ -69,15 +69,15 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
         await this[Symbol.asyncDispose]();
     }
 
-    async notify<TNotification extends keyof TApp['Notifications']>(
-        notification: TNotification,
-        params: TApp['Notifications'][TNotification]['params'],
+    async notify<TMethod extends keyof TApp['Methods']>(
+        method: TMethod,
+        params: TApp['Methods'][TMethod]['params'],
         additionalRequestProperties?: { [name: string]: any },
     ): Promise<void> {
-        await this.#send('notification', String(notification), params, additionalRequestProperties);
+        await this.#send('notification', String(method), params, additionalRequestProperties);
     }
 
-    async open(): Promise<WebSocketJsonRpcClient<TApp>> {
+    async open(): Promise<JsonRpcClient<URL, TApp>> {
         const ws = new WebSocket(this.target(), { timeout: this.#options?.timeout });
 
         const controller = new AbortController();
