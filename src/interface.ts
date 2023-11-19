@@ -10,12 +10,14 @@ export interface JsonRpcClient<TTarget, TApp extends App> extends AsyncDisposabl
 
     notify<TNotification extends keyof TApp['Notifications']>(
         notification: TNotification,
-        ...params: TApp['Notifications'][TNotification]['params']
+        params: TApp['Notifications'][TNotification]['params'],
+        additionalRequestProperties?: { [name: string]: any },
     ): Promise<void>;
 
     call<TMethod extends keyof TApp['Methods']>(
         method: TMethod,
-        ...params: TApp['Methods'][TMethod]['params']
+        params: TApp['Methods'][TMethod]['params'],
+        additionalRequestProperties?: { [name: string]: any },
     ): Promise<TApp['Methods'][TMethod]['result']>;
 
     on<TNotification extends keyof TApp['Notifications']>(

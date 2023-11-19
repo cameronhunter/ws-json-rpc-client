@@ -44,7 +44,7 @@ describe('call', () => {
     test('resolves a sent command', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        server.onMethod((method, params, rpc) => {
+        server.onMethod((method, params, properties, rpc) => {
             if (method === 'hello') {
                 rpc.result(method, `Hello ${params[0]}!`);
             }
@@ -52,7 +52,7 @@ describe('call', () => {
 
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
-        const response = client.call('hello', 'world');
+        const response = client.call('hello', ['world']);
 
         await expect(response).resolves.toBe('Hello world!');
     });
@@ -60,13 +60,13 @@ describe('call', () => {
     test('rejects on errors sent from the server', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        server.onMethod((method, params, rpc) => {
+        server.onMethod((method, params, properties, rpc) => {
             rpc.error(Rpc.ErrorCode.ServerErrorRequestedMethodNotFound);
         });
 
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
-        const response = client.call('hello', 'world');
+        const response = client.call('hello', ['world']);
 
         await expect(response).rejects.toThrow('hello("world") failed.');
         await expect(response).rejects.toHaveProperty(
@@ -86,10 +86,28 @@ describe('call', () => {
 
         await using client = await new WebSocketConnection<MyApp>(server.address(), { timeout: 5 }).open();
 
-        const response = client.call('hello', 'world');
+        const response = client.call('hello', ['world']);
 
         await expect(response).rejects.toThrow('hello("world") failed.');
         await expect(response).rejects.toHaveProperty('cause.message', 'Promise timed out after 5ms');
+    });
+
+    test('sends additional properties', async () => {
+        await using server = await JsonRpcServer.create<MyApp>();
+
+        const notificationReceived = new Promise((resolve) => {
+            server.onNotification((notification, params, additionalRequestProperties) => {
+                if (notification === 'shoutIntoTheVoid') {
+                    resolve(additionalRequestProperties);
+                }
+            });
+        });
+
+        await using client = await new WebSocketConnection<MyApp>(server.address()).open();
+
+        await client.notify('shoutIntoTheVoid', ['Ahhhhh!'], { sessionId: 1 });
+
+        await expect(notificationReceived).resolves.toEqual({ sessionId: 1 });
     });
 });
 
@@ -97,23 +115,42 @@ describe('notify', () => {
     test('resolves without requiring a server response', async () => {
         await using server = await JsonRpcServer.create<MyApp>();
 
-        const notificationReceived = new Promise((resolve) => {
-            server.onNotification((notification, params) => {
-                if (notification === 'shoutIntoTheVoid') {
-                    resolve(params[0]);
+        const methodReceived = new Promise((resolve) => {
+            server.onMethod((method, params, additionalRequestProperties, rpc) => {
+                if (method === 'hello') {
+                    rpc.result(method, `Hello ${params[0]}!`);
+                    resolve(additionalRequestProperties);
                 }
             });
         });
 
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
-        const response = client.notify('shoutIntoTheVoid', 'Ahhhhh!');
+        const response = client.call('hello', ['world'], { sessionId: 10 });
 
-        await expect(response).resolves.toBeUndefined();
-        await expect(notificationReceived).resolves.toBe('Ahhhhh!');
+        await expect(response).resolves.toBe('Hello world!');
+        await expect(methodReceived).resolves.toEqual({ sessionId: 10 });
     });
 
     test.todo('rejects when the WebSocket fails to send');
+
+    test('sends additional properties', async () => {
+        await using server = await JsonRpcServer.create<MyApp>();
+
+        const notificationReceived = new Promise((resolve) => {
+            server.onNotification((notification, params, additionalRequestProperties) => {
+                if (notification === 'shoutIntoTheVoid') {
+                    resolve(additionalRequestProperties);
+                }
+            });
+        });
+
+        await using client = await new WebSocketConnection<MyApp>(server.address()).open();
+
+        await client.notify('shoutIntoTheVoid', ['Ahhhhh!'], { sessionId: 1 });
+
+        await expect(notificationReceived).resolves.toEqual({ sessionId: 1 });
+    });
 });
 
 describe('on', () => {
@@ -126,7 +163,7 @@ describe('on', () => {
             client.on('shoutIntoTheVoid', resolve);
         });
 
-        await server.notify('shoutIntoTheVoid', 'Ahhhhh!');
+        await server.notify('shoutIntoTheVoid', ['Ahhhhh!']);
 
         await expect(notificationReceived).resolves.toBe('Ahhhhh!');
     });

@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "description": "A JSON-RPC 2.0 client that uses a WebSocket for transport",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p ./tsconfig.build.json",
     "format": "prettier --write .",
     "test": "jest"
   },
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "keywords": [
     "WebSocket",
     "JSON-RPC",

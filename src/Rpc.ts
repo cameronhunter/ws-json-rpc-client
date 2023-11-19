@@ -38,15 +38,15 @@ class RpcError extends Error {
         }
     }
 
-    get method() {
+    get rpcMethod() {
         return this.#method;
     }
 
-    get params() {
+    get rpcParams() {
         return this.#params;
     }
 
-    get code() {
+    get rpcCode() {
         return this.#code;
     }
 
@@ -54,16 +54,16 @@ class RpcError extends Error {
         return this.#message;
     }
 
-    get data(): unknown {
+    get rpcData(): unknown {
         return this.#data;
     }
 
     get message(): string {
-        if (this.method && this.params) {
-            return `${this.#method}(${this.params.map((v) => JSON.stringify(v)).join(', ')}) failed.`;
+        if (this.#method && this.#params) {
+            return `${this.#method}(${this.#params.map((v) => JSON.stringify(v)).join(', ')}) failed.`;
         }
 
-        return `${this.code}${this.rpcMessage ? ` - ${this.rpcMessage}` : ''}`;
+        return `${this.#code}${this.#message ? ` - ${this.#message}` : ''}`;
     }
 }
 

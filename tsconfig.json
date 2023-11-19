@@ -1,16 +1,10 @@
 {
-  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "extends": "./tsconfig.build.json",
   "include": [
     "src",
     "test"
   ],
   "compilerOptions": {
-    "lib": [
-      "es2023",
-      "ESNext.Disposable"
-    ],
-    "outDir": "build",
-    "declaration": true,
-    "sourceMap": true
+    "noEmit": true
   }
 }

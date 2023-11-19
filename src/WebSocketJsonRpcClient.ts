@@ -38,9 +38,10 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
 
     call<TMethod extends keyof TApp['Methods']>(
         method: TMethod,
-        ...params: TApp['Methods'][TMethod]['params']
+        params: TApp['Methods'][TMethod]['params'],
+        additionalRequestProperties?: { [name: string]: any },
     ): Promise<TApp['Methods'][TMethod]['result']> {
-        return this.#send('call', String(method), params);
+        return this.#send('call', String(method), params, additionalRequestProperties);
     }
 
     async close(): Promise<void> {
@@ -70,9 +71,10 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
 
     async notify<TNotification extends keyof TApp['Notifications']>(
         notification: TNotification,
-        ...params: TApp['Notifications'][TNotification]['params']
+        params: TApp['Notifications'][TNotification]['params'],
+        additionalRequestProperties?: { [name: string]: any },
     ): Promise<void> {
-        await this.#send('notification', String(notification), params);
+        await this.#send('notification', String(notification), params, additionalRequestProperties);
     }
 
     async open(): Promise<WebSocketJsonRpcClient<TApp>> {
@@ -131,7 +133,12 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
         await this.close();
     }
 
-    #send(type: 'call' | 'notification', method: string, params: unknown[]) {
+    #send(
+        type: 'call' | 'notification',
+        method: string,
+        params: unknown[],
+        additionalRequestProperties?: { [name: string]: any },
+    ) {
         ok(this.#ws, 'WebSocket is not open.');
 
         // Create the error here so that the stack trace is correct.
@@ -142,7 +149,13 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
             rejectionError,
         });
 
-        const request: RpcRequest = { jsonrpc: '2.0', id, method, params };
+        const request: RpcRequest = {
+            ...additionalRequestProperties,
+            jsonrpc: '2.0',
+            id,
+            method,
+            params,
+        };
 
         /**
          * Notifications don't have IDs
