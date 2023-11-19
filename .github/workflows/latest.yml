@@ -19,17 +19,7 @@ jobs:
         steps:
             - name: Get latest published version
               id: get-version
-              uses: actions/github-script@v5
-              with:
-              script: |
-                  const response = await octokit.repos.listReleases({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                  });
-
-                  const latestRelease = response.data[0];
-                  console.log(`::set-output name=version::${latestRelease.tag_name}`);
-              token: ${{ secrets.GITHUB_TOKEN }}
+              run: echo "v$(npm show @cameronhunter/ws-json-rpc-client@latest version)"
 
             - uses: actions/checkout@v3
               with:
