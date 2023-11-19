@@ -5,6 +5,10 @@
     "test"
   ],
   "compilerOptions": {
+    "lib": [
+      "es2023",
+      "ESNext.Disposable"
+    ],
     "outDir": "build",
     "declaration": true,
     "sourceMap": true
