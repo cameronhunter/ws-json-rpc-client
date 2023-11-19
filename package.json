@@ -6,7 +6,6 @@
     "build": "tsc -p ./tsconfig.build.json",
     "format": "prettier --write .",
     "test": "jest",
-    "version": "pnpm changeset version && git push origin main",
     "release": "pnpm run build && pnpm changeset publish"
   },
   "files": [
