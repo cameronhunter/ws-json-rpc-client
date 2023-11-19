@@ -8,6 +8,10 @@
     "test": "jest",
     "release": "pnpm run build && pnpm changeset publish"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cameronhunter/ws-json-rpc-client.git"
+  },
   "files": [
     "build"
   ],
