@@ -28,34 +28,8 @@ jobs:
             - name: Run test suite
               run: pnpm run test
 
-    publish_to_npm:
-        name: Publish to npm
-        runs-on: ubuntu-latest
-        needs: test
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v3
-
-            - name: Use Node LTS
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20.x
-
-            - name: Install dependencies
-              run: corepack enable && pnpm install --frozen-lockfile
-
-            - name: Publish to npm
-              id: changesets
-              uses: changesets/action@v1
-              with:
-                  createGithubReleases: false
-                  publish: pnpm run publish:npm
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    publish_to_github:
-        name: Publish to Github
+    publish:
+        name: Publish
         runs-on: ubuntu-latest
         needs: test
         steps:
@@ -74,15 +48,17 @@ jobs:
               run: |
                   cat << EOF > "$HOME/.npmrc"
                     //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
+                    //registry.npmjs.org/:_authToken=$NPM_TOKEN
                   EOF
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-            - name: Publish to Github
+            - name: Publish to npm
               id: changesets
               uses: changesets/action@v1
               with:
-                  createGithubReleases: true
-                  publish: pnpm run publish:github
+                  publish: pnpm run release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
