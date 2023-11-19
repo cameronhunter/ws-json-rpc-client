@@ -6,7 +6,8 @@
     "build": "tsc -p ./tsconfig.build.json",
     "format": "prettier --write .",
     "test": "jest",
-    "release": "pnpm run build && pnpm changeset publish"
+    "publish:npm": "pnpm run build && pnpm changeset publish",
+    "publish:github": "pnpm run build && npm_config_registry=https://npm.pkg.github.com/ pnpm changeset publish"
   },
   "repository": {
     "type": "git",
