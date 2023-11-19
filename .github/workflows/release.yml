@@ -23,10 +23,13 @@ jobs:
             - name: Install Dependencies
               run: corepack enable && pnpm install --frozen-lockfile
 
+            - name: Run tests
+              run: pnpm test
+
             - name: Version command
               id: version
               run: |
-                  echo ::set-output name=changes::$(pnpx changeset version 2>&1 | grep -q 'No unreleased changesets found' && echo 'false' || echo 'true')
+                  echo ::set-output name=changes::$(pnpm changeset version 2>&1 | grep -q 'No unreleased changesets found' && echo 'false' || echo 'true')
 
             - name: Push changes
               if: steps.version.outputs.changes == 'true'
