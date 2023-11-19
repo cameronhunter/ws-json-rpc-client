@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.3
+
+### Patch Changes
+
+-   5abef7f: Update the badges on README
+
 ## 1.1.2
 
 ### Patch Changes
