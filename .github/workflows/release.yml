@@ -1,6 +1,6 @@
 name: Release
 
-variables:
+env:
     node_versions: [16.x, 18.x, 20.x]
     node_lts: 20.x
 
