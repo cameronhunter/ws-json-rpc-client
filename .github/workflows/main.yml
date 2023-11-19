@@ -81,6 +81,6 @@ jobs:
               id: changesets
               uses: changesets/action@v1
               with:
-                  publish: pnpm run release
+                  publish: pnpm run release --registry https://npm.pkg.github.com/
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
