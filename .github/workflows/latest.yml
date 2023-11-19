@@ -23,7 +23,9 @@ jobs:
 
             - name: Get latest published version
               id: get-version
-              run: echo "v$(jq -r .version package.json)"
+              run: |
+                  PACKAGE_NAME="$(jq -r .name package.json)"
+                  echo "::set-output name=version::v$(npm show ${PACKAGE_NAME}@latest version)"
 
             - name: Checking out tag ${{ steps.get-version.outputs.version }}
               uses: actions/checkout@v3
