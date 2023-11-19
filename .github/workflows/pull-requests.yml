@@ -43,3 +43,5 @@ jobs:
         if: github.event.pull_request.user.login == 'dependabot[bot]'
         steps:
             - uses: mscharley/dependency-changesets-action@v1.0.4
+              with:
+                  use-semantic-commits: false
