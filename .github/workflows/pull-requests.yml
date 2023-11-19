@@ -29,8 +29,8 @@ jobs:
     # Automatically create a changeset for dependabot
     # See: https://github.com/feelepxyz/dependabot-changesets
     changesets:
-        name: Create changeset
+        name: Add changeset for dependabot
         runs-on: ubuntu-latest
-        if: ${{ github.actor == 'dependabot[bot]' }}
+        if: github.actor == 'dependabot[bot]'
         steps:
             - uses: feelepxyz/dependabot-changesets@v1
