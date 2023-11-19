@@ -29,7 +29,7 @@ jobs:
               run: pnpm run test
 
     release:
-        name: Release
+        name: Publish to npm (if necessary)
         runs-on: ubuntu-latest
         needs: test
         steps:
