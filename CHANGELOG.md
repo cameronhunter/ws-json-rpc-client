@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.2
+
+### Patch Changes
+
+-   512102c: Trying out auto-publishing
+
 ## 1.1.1
 
 ### Patch Changes
