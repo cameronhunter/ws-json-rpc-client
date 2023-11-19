@@ -5,8 +5,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
     "format": "prettier --write .",
-    "test": "jest",
-    "release": "pnpm run build && pnpm changeset publish"
+    "test": "jest"
   },
   "files": [
     "build"
