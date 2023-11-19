@@ -159,12 +159,12 @@ describe('on', () => {
         await using client = await new WebSocketConnection<MyApp>(server.address()).open();
 
         const notificationReceived = new Promise((resolve) => {
-            client.on('saidHelloTo', resolve);
+            client.on('saidHelloTo', (params, requestProperties) => resolve([params, requestProperties]));
         });
 
-        await server.notify('saidHelloTo', ['world']);
+        await server.notify('saidHelloTo', ['world'], { sessionId: 3 });
 
-        await expect(notificationReceived).resolves.toBe('world');
+        await expect(notificationReceived).resolves.toEqual([['world'], { sessionId: 3 }]);
     });
 });
 

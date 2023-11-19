@@ -195,7 +195,8 @@ export class WebSocketJsonRpcClient<TApp extends App> extends EventEmitter imple
             }
         } else {
             // Emit notifications
-            this.emit(response.method, ...response.params);
+            const { jsonrpc, method, params, ...rest } = response;
+            this.emit(response.method, response.params, rest);
         }
     }
 }
