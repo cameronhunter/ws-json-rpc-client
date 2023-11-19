@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.1
+
+### Patch Changes
+
+-   04d95ea: Testing out automated release process
+
 ## 1.1.0
 
 ### Minor Changes
