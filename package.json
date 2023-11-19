@@ -7,6 +7,9 @@
     "format": "prettier --write .",
     "test": "jest"
   },
+  "files": [
+    "build"
+  ],
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "keywords": [
