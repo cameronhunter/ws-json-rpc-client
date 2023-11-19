@@ -28,8 +28,8 @@ jobs:
             - name: Run test suite
               run: pnpm run test
 
-    release:
-        name: Publish to npm (if necessary)
+    publish_to_npm:
+        name: Publish to npm registry (if necessary)
         runs-on: ubuntu-latest
         needs: test
         steps:
@@ -48,7 +48,31 @@ jobs:
               id: changesets
               uses: changesets/action@v1
               with:
-                  publish: pnpm run release
+                  publish: pnpm run publish:npm
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    publish_to_github:
+        name: Publish to Github registry (if necessary)
+        runs-on: ubuntu-latest
+        needs: test
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Use Node LTS
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20.x
+
+            - name: Install dependencies
+              run: corepack enable && pnpm install --frozen-lockfile
+
+            - name: Publish to Github
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  publish: pnpm run publish:github
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
