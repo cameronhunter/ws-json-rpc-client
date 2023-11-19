@@ -25,3 +25,12 @@ jobs:
 
             - name: Run test suite
               run: pnpm run test
+
+    # Automatically create a changeset for dependabot
+    # See: https://github.com/feelepxyz/dependabot-changesets
+    changesets:
+        name: Create changeset
+        runs-on: ubuntu-latest
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        steps:
+            - uses: feelepxyz/dependabot-changesets@v1
