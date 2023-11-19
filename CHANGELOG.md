@@ -1,5 +1,12 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.2
+
+### Patch Changes
+
+-   9406811: sfof
+-   512102c: Trying out auto-publishing
+
 ## 1.1.1
 
 ### Patch Changes
