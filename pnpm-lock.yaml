@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@cameronhunter/async-emitter':
-    specifier: ^1.0.0
-    version: 1.0.0
+    specifier: ^1.0.2
+    version: 1.0.2
   '@cameronhunter/async-with-timeout':
     specifier: ^3.1.0
     version: 3.1.0
@@ -411,8 +411,8 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@cameronhunter/async-emitter@1.0.0:
-    resolution: {integrity: sha512-QYlxYcR8xEk2flQJ/mWDNCeCXSJVs16kT59c825UEFmQj+9qMzWXigagRUcpFdVKU7nDUg6Hsc7WdLShl0el1Q==}
+  /@cameronhunter/async-emitter@1.0.2:
+    resolution: {integrity: sha512-dPBMS84eencSsxVRKi8iKXTSIyqDHORR0upDtO9fOUG5uWmAF7b8f/4JwBWUr/UQcxZQJXL74xMktUVUNayfxg==}
     dependencies:
       core-js: 3.33.3
     dev: false
