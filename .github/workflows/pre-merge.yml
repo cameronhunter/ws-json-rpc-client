@@ -47,6 +47,7 @@ jobs:
     dependabot:
       runs-on: ubuntu-latest
       if: github.event.pull_request.user.login == 'dependabot[bot]'
+      needs: [build, test]
       steps:
           - uses: mscharley/dependency-changesets-action@v1.0.6
             with:
