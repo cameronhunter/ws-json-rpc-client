@@ -46,7 +46,7 @@
     "@cameronhunter/async-emitter": "^1.0.0",
     "@cameronhunter/async-with-timeout": "^3.1.0",
     "@cameronhunter/pending-promises": "^1.0.0",
-    "core-js": "^3.33.2",
+    "core-js": "^3.33.3",
     "ws": "^8.14.2"
   },
   "publishConfig": {
