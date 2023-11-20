@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.4
+
+### Patch Changes
+
+-   a635d95: Bump @types/node from 18.18.10 to 20.9.2
+
 ## 1.1.3
 
 ### Patch Changes
