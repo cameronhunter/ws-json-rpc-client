@@ -1,22 +1,39 @@
-name: Pull Requests
+name: Pre-merge
 
 on:
     pull_request:
         branches: [main]
 
 jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Use Node LTS
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install dependencies
+              run: corepack enable && pnpm install --frozen-lockfile
+
+            - name: Build package
+              run: pnpm run build
+
     test:
         name: Test Suite
         runs-on: ubuntu-latest
 
         strategy:
             matrix:
-                node-version: [16.x, 18.x, 20.x]
+                node-version: [lts/*, lts/-1, current]
 
         steps:
-            - uses: actions/checkout@v3
-            - name: Use node ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
+            - uses: actions/checkout@v4
+            - name: Use Node ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
 

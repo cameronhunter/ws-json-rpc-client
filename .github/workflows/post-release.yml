@@ -1,4 +1,4 @@
-name: '@latest'
+name: Post-release
 
 on:
     workflow_run:
@@ -14,10 +14,10 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [16.x, 18.x, 20.x]
+                node-version: [lts/*, lts/-1, current]
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   ref: main
 
@@ -28,17 +28,21 @@ jobs:
                   echo "version=v$(npm show ${PACKAGE_NAME}@latest version || echo '0.0.0')" >> $GITHUB_OUTPUT
 
             - name: Checking out tag ${{ steps.get-version.outputs.version }}
-              uses: actions/checkout@v3
+              if: steps.get-version.outputs.version != 'v0.0.0'
+              uses: actions/checkout@v4
               with:
                   ref: ${{ steps.get-version.outputs.version }}
 
             - name: Use Node ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
+              if: steps.get-version.outputs.version != 'v0.0.0'
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
 
             - name: Install dependencies
+              if: steps.get-version.outputs.version != 'v0.0.0'
               run: corepack enable && pnpm install --frozen-lockfile
 
             - name: Run test suite
+              if: steps.get-version.outputs.version != 'v0.0.0'
               run: pnpm run test
