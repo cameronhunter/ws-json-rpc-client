@@ -11,13 +11,14 @@ updates:
       schedule:
           interval: 'weekly'
 
-    # Automatically create a changeset for dependabot
-    # See: https://github.com/feelepxyz/dependabot-changesets
-    changesets:
-        name: Add changeset for dependabot
-        runs-on: ubuntu-latest
-        if: github.event.pull_request.user.login == 'dependabot[bot]'
-        steps:
-            - uses: mscharley/dependency-changesets-action@v1.0.6
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+      ##
+      # Use conventional commits so that an appropriate changeset can be
+      # created for the change. Changes to dependencies will cause a `patch`
+      # version, whereas devDependencies will cause no change.
+      #
+      # See: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#commit-message
+      ##
+      commit-message:
+          prefix: 'fix'
+          prefix-development: 'chore'
+          include: 'scope'
