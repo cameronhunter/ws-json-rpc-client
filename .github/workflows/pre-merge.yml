@@ -43,13 +43,15 @@ jobs:
             - name: Run test suite
               run: pnpm run test
 
-    # Automatically create a changeset for dependabot
-    # See: https://github.com/feelepxyz/dependabot-changesets
-    changesets:
-        name: Add changeset for dependabot
-        runs-on: ubuntu-latest
-        if: github.event.pull_request.user.login == 'dependabot[bot]'
-        steps:
-            - uses: mscharley/dependency-changesets-action@v1.0.6
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+    # Create changesets (if necessary) and auto-merge pull requests from dependabot.
+    dependabot:
+      runs-on: ubuntu-latest
+      if: github.event.pull_request.user.login == 'dependabot[bot]'
+      steps:
+          - uses: mscharley/dependency-changesets-action@v1.0.6
+            with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+          - run: gh pr merge --auto --merge "$PR_URL"
+            env:
+                PR_URL: ${{github.event.pull_request.html_url}}
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
