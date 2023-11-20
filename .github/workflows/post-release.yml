@@ -2,10 +2,8 @@ name: Post-release
 
 on:
     workflow_run:
-        workflows:
-            - main
-        types:
-            - completed
+        workflows: [post-merge]
+        types: [completed]
 
 jobs:
     test:
