@@ -1,5 +1,11 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.5
+
+### Patch Changes
+
+-   bd9eafc: Bump core-js from 3.33.2 to 3.33.3
+
 ## 1.1.4
 
 ### Patch Changes
