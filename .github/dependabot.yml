@@ -10,3 +10,14 @@ updates:
       versioning-strategy: increase
       schedule:
           interval: 'weekly'
+
+    # Automatically create a changeset for dependabot
+    # See: https://github.com/feelepxyz/dependabot-changesets
+    changesets:
+        name: Add changeset for dependabot
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        steps:
+            - uses: mscharley/dependency-changesets-action@v1.0.6
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
