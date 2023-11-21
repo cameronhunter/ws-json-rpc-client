@@ -1,5 +1,12 @@
 # @cameronhunter/ws-json-rpc-client
 
+## 1.1.6
+
+### Patch Changes
+
+-   15b1678: fix(deps): bump @cameronhunter/async-with-timeout from 3.1.0 to 3.1.1
+-   08b5e04: fix(deps): bump @cameronhunter/pending-promises from 1.0.0 to 1.0.1
+
 ## 1.1.5
 
 ### Patch Changes
