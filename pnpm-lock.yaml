@@ -12,8 +12,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   '@cameronhunter/pending-promises':
-    specifier: ^1.0.0
-    version: 1.0.0
+    specifier: ^1.0.1
+    version: 1.0.1
   core-js:
     specifier: ^3.33.3
     version: 3.33.3
@@ -425,11 +425,15 @@ packages:
     resolution: {integrity: sha512-0vNNdGp8l/hLg6hj+w1lrNuOJZWSHLqBJ+4ttaKFcsBCl8ZbhYKy/JhjRtA4AlRCqllqrXJHsdPSbZ3zHfOuLA==}
     dev: false
 
-  /@cameronhunter/pending-promises@1.0.0:
-    resolution: {integrity: sha512-UBBU8rPkbKHSH95ynXfo2Z+1+4vCwIRBvSS/2nsmbu8IMfPwdPuxwPANaonoQSkKIMXOv9+y1FxJ++QPsYoLPA==}
+  /@cameronhunter/clone-error@1.0.3:
+    resolution: {integrity: sha512-YvnsbtO1vpdZlKahSuSn4dFyqZRn62xOFoFJiA4CO7OLF+gc5fMvO8Myy5xVvwK6uTwN/M3hfCN+aWfBT83gbg==}
+    dev: false
+
+  /@cameronhunter/pending-promises@1.0.1:
+    resolution: {integrity: sha512-YklNEDg5/JGspxVTpKZr9oWop8m3FOuOTjej/zlmczEFez3ak4WyGOSOEiFDlcpOknOqvbf1OaB5J+SFANXabw==}
     dependencies:
       '@cameronhunter/async-with-timeout': 3.1.0
-      '@cameronhunter/clone-error': 1.0.2
+      '@cameronhunter/clone-error': 1.0.3
       core-js: 3.33.3
       debug: 4.3.4
     transitivePeerDependencies:
