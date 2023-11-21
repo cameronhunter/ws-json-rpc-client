@@ -60,7 +60,7 @@ jobs:
             ##
             - run: |
                   for i in {1..3}; do
-                    if gh pr merge --auto --rebase --squash "${PR_URL}"; then
+                    if gh pr merge --auto --squash "${PR_URL}"; then
                       break
                     fi
 
