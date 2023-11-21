@@ -53,7 +53,7 @@ jobs:
             - uses: mscharley/dependency-changesets-action@v1.0.6
               with:
                   token: ${{ secrets.DEPENDENCY_UPDATE_GITHUB_TOKEN }}
-            - run: gh pr merge --auto --squash "${PR_URL}"
+            - run: gh pr merge --auto --rebase --squash "${PR_URL}"
               env:
                   PR_URL: ${{github.event.pull_request.html_url}}
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
