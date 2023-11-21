@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.0.2
     version: 1.0.2
   '@cameronhunter/async-with-timeout':
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^3.1.1
+    version: 3.1.1
   '@cameronhunter/pending-promises':
     specifier: ^1.0.1
     version: 1.0.1
@@ -414,15 +414,11 @@ packages:
       core-js: 3.33.3
     dev: false
 
-  /@cameronhunter/async-with-timeout@3.1.0:
-    resolution: {integrity: sha512-QdCmrQnYKcQFHO764w4SQfcO/cuh+oycV3qg4PqB7xeo+yrbpTSV+5yECJOytz3seXP/ct1+dFFgWOck87yiBA==}
+  /@cameronhunter/async-with-timeout@3.1.1:
+    resolution: {integrity: sha512-7xC/xw7gDIhG8DRBuRkiwNXf9kz9RbmqNNs2IVha2qfR15shTX3oJ40GS6YEldlrwcr1Qzz8vGuLl8Bbrj0DJA==}
     engines: {node: '>=16'}
     dependencies:
-      '@cameronhunter/clone-error': 1.0.2
-    dev: false
-
-  /@cameronhunter/clone-error@1.0.2:
-    resolution: {integrity: sha512-0vNNdGp8l/hLg6hj+w1lrNuOJZWSHLqBJ+4ttaKFcsBCl8ZbhYKy/JhjRtA4AlRCqllqrXJHsdPSbZ3zHfOuLA==}
+      '@cameronhunter/clone-error': 1.0.3
     dev: false
 
   /@cameronhunter/clone-error@1.0.3:
@@ -432,7 +428,7 @@ packages:
   /@cameronhunter/pending-promises@1.0.1:
     resolution: {integrity: sha512-YklNEDg5/JGspxVTpKZr9oWop8m3FOuOTjej/zlmczEFez3ak4WyGOSOEiFDlcpOknOqvbf1OaB5J+SFANXabw==}
     dependencies:
-      '@cameronhunter/async-with-timeout': 3.1.0
+      '@cameronhunter/async-with-timeout': 3.1.1
       '@cameronhunter/clone-error': 1.0.3
       core-js: 3.33.3
       debug: 4.3.4
