@@ -26,8 +26,8 @@ devDependencies:
     specifier: ^2.27.1
     version: 2.27.1
   '@tsconfig/node-lts':
-    specifier: ^20.1.0
-    version: 20.1.0
+    specifier: ^20.1.1
+    version: 20.1.1
   '@types/detect-port':
     specifier: ^1.3.5
     version: 1.3.5
@@ -936,8 +936,8 @@ packages:
       '@sinonjs/commons': 3.0.0
     dev: true
 
-  /@tsconfig/node-lts@20.1.0:
-    resolution: {integrity: sha512-3w2D9MfGdqBL51pHB5nGFmGtXBn1gbO+n9xzwcGSvZPArtCn4tElk+6EeelLXispAeqv13GAgbzkgLNHtoxOCQ==}
+  /@tsconfig/node-lts@20.1.1:
+    resolution: {integrity: sha512-V7wHydi1dv8I8xiOX3pJ0lhC+MlOakznvLks94J6y/TqQK6DBcbdD1G4jEq8yU+s6lBASPn4e1Ci636fDqeyvQ==}
     dev: true
 
   /@types/babel__core@7.20.4:
