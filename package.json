@@ -39,7 +39,7 @@
     "prettier": "^3.2.5",
     "prettier-2": "npm:prettier@^2",
     "ts-jest": "^29.1.2",
-    "typescript": "5.3.3"
+    "typescript": "5.4.3"
   },
   "dependencies": {
     "@cameronhunter/async-emitter": "^1.0.2",
