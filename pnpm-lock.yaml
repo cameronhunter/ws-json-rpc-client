@@ -15,8 +15,8 @@ dependencies:
     specifier: ^1.0.1
     version: 1.0.1
   core-js:
-    specifier: ^3.37.1
-    version: 3.37.1
+    specifier: ^3.38.1
+    version: 3.38.1
   ws:
     specifier: ^8.14.2
     version: 8.14.2
@@ -411,7 +411,7 @@ packages:
   /@cameronhunter/async-emitter@1.0.2:
     resolution: {integrity: sha512-dPBMS84eencSsxVRKi8iKXTSIyqDHORR0upDtO9fOUG5uWmAF7b8f/4JwBWUr/UQcxZQJXL74xMktUVUNayfxg==}
     dependencies:
-      core-js: 3.37.1
+      core-js: 3.38.1
     dev: false
 
   /@cameronhunter/async-with-timeout@3.1.1:
@@ -430,7 +430,7 @@ packages:
     dependencies:
       '@cameronhunter/async-with-timeout': 3.1.1
       '@cameronhunter/clone-error': 1.0.3
-      core-js: 3.37.1
+      core-js: 3.38.1
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
@@ -1332,8 +1332,8 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
-  /core-js@3.37.1:
-    resolution: {integrity: sha512-Xn6qmxrQZyB0FFY8E3bgRXei3lWDJHhvI+u0q9TKIYM49G8pAr0FgnnrFRAmsbptZL1yxRADVXn+x5AGsbBfyw==}
+  /core-js@3.38.1:
+    resolution: {integrity: sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==}
     requiresBuild: true
     dev: false
 
